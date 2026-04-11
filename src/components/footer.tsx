@@ -1,4 +1,4 @@
-import { Github } from "lucide-react"
+import { APP_NAME, GITHUB_URL } from "../utils/config"
 
 export function Footer() {
   return (
@@ -9,7 +9,7 @@ export function Footer() {
             <div className="flex h-6 w-6 items-center justify-center rounded bg-foreground">
               <span className="text-xs font-bold text-background">K</span>
             </div>
-            <span className="text-sm text-muted-foreground">next-kitte</span>
+            <span className="text-sm text-muted-foreground">{APP_NAME}</span>
           </div>
 
           <div className="flex items-center gap-6">
@@ -32,12 +32,12 @@ export function Footer() {
               Examples
             </a>
             <a
-              href="https://github.com"
+              href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              <Github className="h-5 w-5" />
+              Github
             </a>
           </div>
         </div>

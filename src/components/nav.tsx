@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import { cn } from "@/src/lib/utils"
+import { APP_NAME, GITHUB_URL } from "../utils/config"
 
 const navItems = [
   { label: "Quick Start", href: "#quick-start" },
@@ -17,11 +18,11 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href="#" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-foreground">
             <span className="text-sm font-bold text-background">K</span>
           </div>
-          <span className="font-semibold tracking-tight">next-kitte</span>
+          <span className="font-semibold tracking-tight">{APP_NAME}</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -36,7 +37,7 @@ export function Nav() {
             </a>
           ))}
           <a
-            href="https://github.com"
+            href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 rounded-md bg-secondary px-3 py-1.5 text-sm font-medium hover:bg-secondary/80 transition-colors"
@@ -79,7 +80,7 @@ export function Nav() {
             </a>
           ))}
           <a
-            href="https://github.com"
+            href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 rounded-md bg-secondary px-3 py-2 text-sm font-medium w-fit"

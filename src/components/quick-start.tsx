@@ -1,12 +1,13 @@
+import { NPM_PACKAGE } from "../utils/config"
 import { Code } from "./code"
 import { InstallCommand } from "./code/install-command"
 
 const step1Code = `// 1. Create your first action
 // actions.ts
-import { Kitte } from "next-kitte"
+import { createKitte } from "next-kitte"
 import { z } from "zod"
 
-const helloAction = new Kitte()
+const helloAction = createKitte()
   .schema(z.object({ name: z.string() }))
   .action(async ({ input }) => {
     return { message: \`Hello, \${input.name}!\` }
@@ -39,13 +40,19 @@ export function HelloForm() {
 
 export function QuickStart() {
   return (
-    <section id="quick-start" className="py-20 border-t border-border/50">
+    <section
+      id="quick-start"
+      className="border-t border-border/50 bg-background py-20 sm:py-24"
+    >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-12">
+          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-3">
+            Get started
+          </p>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
             Quick Start
           </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl">
+          <p className="mt-4 text-muted-foreground max-w-2xl text-pretty leading-relaxed">
             Get up and running with next-kitte in under a minute.
           </p>
         </div>
@@ -59,7 +66,10 @@ export function QuickStart() {
               </div>
               <h3 className="text-lg font-semibold">Install the package</h3>
             </div>
-            <InstallCommand packageName="next-kitte zod" className="max-w-xl" />
+            <InstallCommand
+              packageName={`${NPM_PACKAGE} zod`}
+              className="max-w-xl"
+            />
           </div>
 
           {/* Step 1: Create Action */}

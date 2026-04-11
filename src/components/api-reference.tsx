@@ -1,6 +1,7 @@
+import { Card } from "@/src/components/ui/card"
 import { Code } from "./code"
 
-const kitteClassCode = `const action = new Kitte()
+const kitteClassCode = `const action = createKitte()
   .schema(zodSchema)   // Optional: Zod schema for input validation
   .use(middleware)     // Optional: Add context middleware
   .action(handler)     // Required: Define the action handler`
@@ -29,9 +30,8 @@ type PossibleError = Error | ZodError`
 
 const methods = [
   {
-    name: "new Kitte(schema?)",
-    description:
-      "Creates a new Kitte instance. Optionally accepts a Zod schema for input validation.",
+    name: "createKitte()",
+    description: "Creates the Kitte client.",
   },
   {
     name: ".schema(schema)",
@@ -52,13 +52,19 @@ const methods = [
 
 export function APIReference() {
   return (
-    <section id="api" className="py-20 border-t border-border/50">
+    <section
+      id="api"
+      className="border-t border-border/50 bg-card/6 py-20 sm:py-24"
+    >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-12">
+          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-3">
+            Reference
+          </p>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
             API Reference
           </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl">
+          <p className="mt-4 text-muted-foreground max-w-2xl text-pretty leading-relaxed">
             Complete API documentation for next-kitte.
           </p>
         </div>
@@ -86,17 +92,17 @@ export function APIReference() {
               <h4 className="text-lg font-medium mb-4">Methods</h4>
               <div className="space-y-4">
                 {methods.map((method) => (
-                  <div
+                  <Card
                     key={method.name}
-                    className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 p-4 rounded-lg bg-card border border-border/50"
+                    className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 border-border/50 bg-card/60 p-4 shadow-none"
                   >
                     <code className="font-mono text-sm text-accent shrink-0">
                       {method.name}
                     </code>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {method.description}
                     </p>
-                  </div>
+                  </Card>
                 ))}
               </div>
             </div>

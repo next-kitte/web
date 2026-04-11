@@ -3,6 +3,7 @@ import { Examples } from "@/src/components/examples"
 import { Features } from "@/src/components/features"
 import { Footer } from "@/src/components/footer"
 import { Hero } from "@/src/components/hero"
+import { LandingCta } from "@/src/components/landing-cta"
 import { Nav } from "@/src/components/nav"
 import { QuickStart } from "@/src/components/quick-start"
 
@@ -16,6 +17,7 @@ export default function Home() {
         <QuickStart />
         <APIReference />
         <Examples />
+        <LandingCta />
       </main>
       <Footer />
     </div>

@@ -2,15 +2,41 @@ import { Analytics } from "@vercel/analytics/next"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
+import { APP_DESCRIPTION, APP_NAME } from "../utils/config"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+})
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+})
+
+const defaultTitle = `${APP_NAME} | Type-safe Server Actions for Next.js`
+const defaultDescription = APP_DESCRIPTION
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
 
 export const metadata: Metadata = {
-  title: "next-kitte | Type-safe Server Actions for Next.js",
-  description:
-    "A Next.js server actions library with schema validation and middleware support. Type-safe, chainable API with Zod validation.",
+  ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),
+  title: defaultTitle,
+  description: defaultDescription,
   generator: "v0.app",
+  openGraph: {
+    title: defaultTitle,
+    description: defaultDescription,
+    type: "website",
+    url: siteUrl,
+    siteName: APP_NAME,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: defaultTitle,
+    description: defaultDescription,
+  },
+  alternates: siteUrl ? { canonical: siteUrl } : undefined,
   icons: {
     icon: [
       {
@@ -36,7 +62,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html
+      lang="en"
+      className={`scroll-smooth ${geistSans.variable} ${geistMono.variable}`}
+    >
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === "production" && <Analytics />}

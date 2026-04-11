@@ -9,7 +9,7 @@ const examples = [
     id: "validation",
     title: "Schema Validation",
     description: "Validate inputs with Zod schemas",
-    code: `const validatedAction = new Kitte()
+    code: `const validatedAction = createKitte()
   .schema(z.object({
     email: z.string().email(),
     password: z.string().min(8),
@@ -24,18 +24,14 @@ const examples = [
     id: "middleware",
     title: "Middleware Chaining",
     description: "Add context with chainable middleware",
-    code: `
-const authMiddleware = new Kitte()
-   .middleware(() => {
-      const user = await getUser()
-      return { user }
-})
-    
-const authAction = new Kitte()
-  .use(authMiddleware)
+    code: `const authAction = createKitte()
+  .use(async () => {
+    const user = await getUser()
+    return { ctx: { user } }
+  })
   .action(async ({ input, ctx }) => {
-    // ctx = { user, permissions }
-    return ctx
+    // ctx.user from middleware
+    return { ok: true, userId: ctx.user.id }
   })`,
   },
   {
@@ -45,7 +41,7 @@ const authAction = new Kitte()
     code: `
     'use server'
     
-import { Kitte } from "next-kitte"
+import { createKitte } from "next-kitte"
 import { z } from "zod"
 
 const createUserSchema = z.object({
@@ -53,7 +49,7 @@ const createUserSchema = z.object({
   email: z.string().email(),
 })
 
-export const createUserAction = new Kitte()
+export const createUserAction = createKitte()
   .schema(createUserSchema)
   .use(async ({ input, ctx }) => {
     return { currentUser: { id: "user-123", role: "admin" } }
@@ -107,13 +103,19 @@ export function Examples() {
     examples.find((e) => e.id === activeExample) || examples[0]
 
   return (
-    <section id="examples" className="py-20 border-t border-border/50">
+    <section
+      id="examples"
+      className="border-t border-border/50 bg-background py-20 sm:py-24"
+    >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-12">
+          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-3">
+            Cookbook
+          </p>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
             Examples
           </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl">
+          <p className="mt-4 text-muted-foreground max-w-2xl text-pretty leading-relaxed">
             Common patterns and use cases for next-kitte.
           </p>
         </div>
