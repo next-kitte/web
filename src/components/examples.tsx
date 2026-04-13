@@ -10,9 +10,12 @@ const examples = [
     title: "Schema Validation",
     description: "Validate inputs with Zod schemas",
     code: `const validatedAction = createKitte()
-  .schema(z.object({
+  .input(z.object({
     email: z.string().email(),
     password: z.string().min(8),
+  }))
+  .output(z.object({
+    success: z.boolean(),
   }))
   .action(async ({ input }) => {
     // input is type-safe and validated
@@ -35,6 +38,25 @@ const examples = [
   })`,
   },
   {
+    id: "hooks",
+    title: "Hooks",
+    description: "Chain of hooks",
+    code: `const authAction = createKitte()
+  .onStart(() => {
+    console.log("Action started")
+  })
+  .onSuccess(({ data }) => {
+    console.log("Action succeeded", data)
+  })
+  .onError(({ error }) => {
+    console.error("Action failed", error)
+  })
+  .action(async ({ input, ctx }) => {
+    // ctx.user from middleware
+    return { ok: true, userId: ctx.user.id }
+  })`,
+  },
+  {
     id: "server",
     title: "Server Action",
     description: "Complete server-side action example",
@@ -50,7 +72,7 @@ const createUserSchema = z.object({
 })
 
 export const createUserAction = createKitte()
-  .schema(createUserSchema)
+  .input(createUserSchema)
   .use(async ({ input, ctx }) => {
     return { currentUser: { id: "user-123", role: "admin" } }
   })

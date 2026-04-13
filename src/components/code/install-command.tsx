@@ -10,20 +10,20 @@ type InstallCommandProps = {
   className?: string
 }
 
+type PackageManagers = "npm" | "pnpm" | "yarn" | "bun"
+
 export function InstallCommand({
   packageName,
   className,
 }: InstallCommandProps) {
-  const [activeTab, setActiveTab] = useState<"npm" | "pnpm" | "yarn" | "bun">(
-    "npm",
-  )
+  const [activeTab, setActiveTab] = useState<PackageManagers>("npm")
   const [copied, setCopied] = useState(false)
 
-  const commands = {
-    npm: `npm install ${packageName}`,
-    pnpm: `pnpm add ${packageName}`,
-    yarn: `yarn add ${packageName}`,
-    bun: `bun add ${packageName}`,
+  const commands: Record<PackageManagers, `${string} zod`> = {
+    npm: `npm install ${packageName} zod`,
+    pnpm: `pnpm add ${packageName} zod`,
+    yarn: `yarn add ${packageName} zod`,
+    bun: `bun add ${packageName} zod`,
   }
 
   const copyToClipboard = async () => {

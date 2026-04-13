@@ -2,9 +2,10 @@ import { Card } from "@/src/components/ui/card"
 import { Code } from "./code"
 
 const kitteClassCode = `const action = createKitte()
-  .schema(zodSchema)   // Optional: Zod schema for input validation
-  .use(middleware)     // Optional: Add context middleware
-  .action(handler)     // Required: Define the action handler`
+  .input(zodSchema)   // Optional: Zod schema for input validation
+  .output(zodSchema)  // Optional: Zod schema for output validation
+  .use(middleware)    // Optional: Add context middleware
+  .action(handler)    // Required: Define the action handler`
 
 const useKitteActionCode = `const {
   data,    // TOutput | null - the action result on success
@@ -17,13 +18,7 @@ const useKitteActionCode = `const {
 })`
 
 const typesCode = `// Return type for all actions
-type ActionResult<T> = [T, null] | [null, PossibleError]
-
-// Parameter passed to middleware and handlers
-type Params<Schema, TCtx> = { 
-  input: z.infer<Schema>, 
-  ctx: TCtx 
-}
+type Response = KitteResult<typeof action>
 
 // Possible error types
 type PossibleError = Error | ZodError`
@@ -34,14 +29,33 @@ const methods = [
     description: "Creates the Kitte client.",
   },
   {
-    name: ".schema(schema)",
+    name: ".input(schema)",
     description:
       "Sets or updates the Zod schema for input validation. Returns the Kitte instance for chaining.",
+  },
+  {
+    name: ".output(schema)",
+    description:
+      "Sets or updates the Zod schema for output validation. Returns the Kitte instance for chaining.",
   },
   {
     name: ".use(middlewareFn)",
     description:
       "Adds middleware that receives { input, ctx } and returns { ctx: TNewCtx }. Can be chained multiple times.",
+  },
+  {
+    name: ".onStart(callbackFn)",
+    description: "Adds a callback that runs before everyting handler.",
+  },
+  {
+    name: ".onSuccess(callbackFn)",
+    description:
+      "Adds a callback that runs after the action handler succeeds. Receives { data }.",
+  },
+  {
+    name: ".onError(callbackFn)",
+    description:
+      "Adds a callback that runs after the action handler fails. Receives { error }.",
   },
   {
     name: ".action(handlerFn)",
@@ -70,16 +84,15 @@ export function APIReference() {
         </div>
 
         <div className="space-y-16">
-          {/* Kitte Class */}
           <div>
             <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
               <span className="text-muted-foreground font-mono text-base">
-                class
+                createKitte()
               </span>
               Kitte
             </h3>
             <p className="text-muted-foreground mb-6">
-              The core class for defining server actions with validation and
+              The core function for defining server actions with validation and
               middleware.
             </p>
             <Code

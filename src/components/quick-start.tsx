@@ -8,7 +8,7 @@ import { createKitte } from "next-kitte"
 import { z } from "zod"
 
 const helloAction = createKitte()
-  .schema(z.object({ name: z.string() }))
+  .input(z.object({ name: z.string() }))
   .action(async ({ input }) => {
     return { message: \`Hello, \${input.name}!\` }
   })
@@ -67,7 +67,7 @@ export function QuickStart() {
               <h3 className="text-lg font-semibold">Install the package</h3>
             </div>
             <InstallCommand
-              packageName={`${NPM_PACKAGE} zod`}
+              packageName={`${NPM_PACKAGE}`}
               className="max-w-xl"
             />
           </div>

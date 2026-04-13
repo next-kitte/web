@@ -9,4 +9,4 @@ export const NPM_PACKAGE = "next-kitte"
 
 export const NPM_URL = `https://www.npmjs.com/package/${NPM_PACKAGE}`
 
-export const RELEASE_VERSION = "v0.0.7"
+export const RELEASE_VERSION = "v0.0.10"

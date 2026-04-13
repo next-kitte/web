@@ -59,7 +59,7 @@ export function Features() {
               </p>
             </div>
             <p className="relative mt-6 text-sm text-muted-foreground border-t border-border/50 pt-6 font-mono leading-relaxed">
-              .schema() → .use() → .action()
+              .input() → .use() → .action()
             </p>
           </div>
 

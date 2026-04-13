@@ -6,7 +6,7 @@ const heroCode = `import { createKitte } from "next-kitte"
 import { z } from "zod"
 
 const createUser = createKitte()
-  .schema(z.object({ name: z.string(), email: z.string().email() }))
+  .input(z.object({ name: z.string(), email: z.string().email() }))
   .use(async ({ ctx }) => ({ user: await getUser() }))
   .action(async ({ input, ctx }) => {
     return { success: true, user: ctx.user }
